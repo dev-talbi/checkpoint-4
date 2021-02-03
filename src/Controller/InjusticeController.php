@@ -2,13 +2,17 @@
 
 namespace App\Controller;
 
+use App\Entity\PostLike;
 use App\Entity\Injustice;
 use App\Form\InjusticeType;
+use App\Repository\PostLikeRepository;
 use App\Repository\InjusticeRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/injustice")
@@ -90,5 +94,40 @@ class InjusticeController extends AbstractController
         }
 
         return $this->redirectToRoute('injustice_index');
+    }
+
+    /**
+     * @Route("/{id}/like", name="post_like")
+     */
+    public function like(Injustice $injustice, EntityManagerInterface $manager, PostLikeRepository $likeRepo): Response
+    {
+        $user = $this->getUser();
+        if (!$user) return $this->json([
+            'code' => 403,
+            'message' => 'Vous n\'ete pas conecter'
+        ], 403);
+
+        if ($injustice->isLikedByUser($user)) {
+            $like = $likeRepo->findOneBy([
+                'injustice' => $injustice,
+                'user' => $user
+            ]);
+            $manager->remove($like);
+            $manager->flush();
+            return $this->json([
+                'code' => 200,
+                'message' => 'like bien supprimé',
+                'likes' => $likeRepo->count(['injustice' => $injustice])
+            ], 200);
+        }
+        $like = new PostLike();
+        $like->setInjustice($injustice)->setUser($user);
+        $manager->persist($like);
+        $manager->flush();
+        return $this->json([
+            'code' => 200,
+            'message' => 'cela fonctione',
+            'likes' => $likeRepo->count(['injustice' => $injustice])
+        ], 200);
     }
 }

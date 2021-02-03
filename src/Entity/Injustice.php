@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\InjusticeRepository;
 use Doctrine\Common\Collections\Collection;
@@ -26,7 +27,7 @@ class Injustice
     private $title;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=2000)
      */
     private $description;
 
@@ -171,9 +172,19 @@ class Injustice
         return $this;
     }
 
+    public function isLikedByUser(User $user): bool
+    {
+        foreach ($this->likes as $like) {
+            if ($like->getUser() === $user) return true;
+        }
+
+        return false;
+    }
+
     public function __toString()
     {
         return $this->date;
         return $this->DateTime;
+        return $this->likes;
     }
 }
