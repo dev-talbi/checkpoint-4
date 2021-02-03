@@ -15,9 +15,8 @@
 
 <div class="form-group">
     <label for="exampleInputEmail1">Auteur</label>
-    {{ form_widget(form.author,{ 'value': app.user.pseudo }) }}
+    {{ form_widget(form.author,{ 'select': app.user.id }) }}
 </div>
 <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
-
 {{ dump(app.user) }}
