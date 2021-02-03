@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\InjusticeRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\InjusticeRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints\Date;
 
 /**
  * @ORM\Entity(repositoryClass=InjusticeRepository::class)
@@ -53,6 +54,7 @@ class Injustice
     {
         $this->likes = new ArrayCollection();
         $this->pictures = new ArrayCollection();
+        $this->date = new \DateTime('now');
     }
 
     public function getId(): ?int
@@ -83,6 +85,7 @@ class Injustice
 
         return $this;
     }
+
 
     public function getDate(): ?\DateTimeInterface
     {
@@ -166,5 +169,11 @@ class Injustice
         $this->author = $author;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->date;
+        return $this->DateTime;
     }
 }
