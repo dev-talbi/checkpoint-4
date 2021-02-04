@@ -1,39 +1,44 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Injustice{% endblock %}
+{% block stylesheets %}
+<link href="{{asset('asset/css/home.css')}}" rel="stylesheet">
+{% endblock %}
 
 {% block body %}
-<h1>Injustice</h1>
+<div class="container">
+    <a class="link-injustice" href="{{ path('injustice_show', {id: injustice.id}) }}">
+        <div class="card card-home">
+            <div class="card-header">
+                Proposé par {{injustice.author}} le {{injustice.date|date('d/m/Y')}}
+                {% for i in range(0, injustice.theme|length -1) %}
+                {{ injustice.theme[i].icon|raw }}
+                {% endfor %}
 
-<table class="table">
-    <tbody>
-        <tr>
-            <th>Id</th>
-            <td>{{ injustice.id }}</td>
-        </tr>
-        <tr>
-            <th>Title</th>
-            <td>{{ injustice.title }}</td>
-        </tr>
-        <tr>
-            <th>Description</th>
-            <td>{{ injustice.description }}</td>
-        </tr>
-        <tr>
-            <th>Date</th>
-            <td>{{ injustice.date ? injustice.date|date('Y-m-d') : '' }}</td>
-        </tr>
-        <tr>
-            <th>Auteur</th>
-            <td>{{ injustice.author}}</td>
-        </tr>
-    </tbody>
-</table>
+            </div>
+            <div class="card-body">
+                <div class="picture-container">
+                    <img class="show-one-picture" src="{{injustice.picture}}" alt="{{injustice.title}}">
+                </div>
+                <h5>{{injustice.title}}</h3>
+                    {{injustice.description}}
+            </div>
+    </a>
+    <div class="card-footer">
 
-<a href="{{ path('injustice_index') }}">back to list</a>
+        <a class="btn btn-link js-like" href="{{ path('post_like', {id: injustice.id}) }}">
+            {% if app.user and injustice.isLikedByUser(app.user) %}
+            <i class="fas fa-thumbs-up"></i>
+            {% else %}
+            <i class="far fa-thumbs-up"></i>
+            {% endif %}
+            <span class="js-likes">{{injustice.likes| length}}</span>
+            <span class="js-label">j'aime</span>
+        </a>
 
-<a href="{{ path('injustice_edit', {'id': injustice.id}) }}">edit</a>
+    </div>
+</div>
 
-{{ include('injustice/_delete_form.html.twig') }}
+</div>
 
 {% endblock %}

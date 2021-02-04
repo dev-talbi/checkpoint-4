@@ -29,6 +29,11 @@ class Theme
      */
     private $injustices;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $icon;
+
     public function __construct()
     {
         $this->injustices = new ArrayCollection();
@@ -80,6 +85,18 @@ class Theme
 
     public function __toString()
     {
-        return $this->subject;
+        return $this->icon;
+    }
+
+    public function getIcon(): ?string
+    {
+        return $this->icon;
+    }
+
+    public function setIcon(?string $icon): self
+    {
+        $this->icon = $icon;
+
+        return $this;
     }
 }

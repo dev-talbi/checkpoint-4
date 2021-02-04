@@ -1,6 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Home{% endblock %}
+{% block stylesheets %}
+<link href="{{asset('asset/css/home.css')}}" rel="stylesheet">
+{% endblock %}
 
 {% block body %}
 <div class="container">
@@ -9,10 +12,14 @@
         <div class="card card-home">
             <div class="card-header">
                 Proposé par {{injustice.author}} le {{injustice.date|date('d/m/Y')}}
+                {% for i in range(0, injustice.theme|length -1) %}
+                {{ injustice.theme[i].icon|raw }}
+                {% endfor %}
+
             </div>
             <div class="card-body">
                 <h5>{{injustice.title}}</h3>
-                    {{injustice.description|u.truncate(300, ' ...')}}
+                    {{injustice.description|u.truncate(400, ' ...')}}
             </div>
     </a>
     <div class="card-footer">
