@@ -81,7 +81,7 @@ class InjusticeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('injustice_index');
+            return $this->redirectToRoute('home');
         }
 
         return $this->render('injustice/edit.html.twig', [
@@ -102,7 +102,7 @@ class InjusticeController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('injustice_index');
+        return $this->redirectToRoute('home');
     }
 
     /**
