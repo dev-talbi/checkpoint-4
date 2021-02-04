@@ -9,14 +9,13 @@
     {{ form_widget(form.description) }}
 </div>
 
-<div class="form-group">
+<div class="form-group hide">
     {{ form_widget(form.date) }}
 </div>
 
-<div class="form-group">
+<div class="form-group hide">
     <label for="exampleInputEmail1">Auteur</label>
     {{ form_widget(form.author,{ 'select': app.user.id }) }}
 </div>
 <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
-{{ dump(app.user) }}

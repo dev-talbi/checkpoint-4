@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Entity\PostLike;
 use App\Entity\Injustice;
 use App\Form\InjusticeType;
@@ -35,6 +36,7 @@ class InjusticeController extends AbstractController
     public function new(Request $request): Response
     {
         $injustice = new Injustice();
+        $user = new User();
         $form = $this->createForm(InjusticeType::class, $injustice);
         $form->handleRequest($request);
 
