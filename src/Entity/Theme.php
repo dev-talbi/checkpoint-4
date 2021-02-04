@@ -85,6 +85,7 @@ class Theme
 
     public function __toString()
     {
+        return $this->subject;
         return $this->icon;
     }
 
