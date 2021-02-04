@@ -31,14 +31,8 @@ class EditProfileType extends AbstractType
                 ]
             ])
 
-            ->add('pseudo', TextType::class, [
-                'label' => 'Pseudo',
-                'attr' => [
-                    'placeholder' => 'Votre prenom'
-                ]
-            ])
-            ->add('avatar', TextType::class, [
-                'label' => 'Pseudo',
+            ->add('photo', TextType::class, [
+                'label' => 'Avatar',
                 'attr' => [
                     'placeholder' => 'Votre prenom'
                 ]

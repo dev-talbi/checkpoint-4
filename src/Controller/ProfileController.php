@@ -43,7 +43,11 @@ class ProfileController extends AbstractController
             $message = "Votre profile a bien été édité !";
         }
 
+
         $user = $this->security->getUser();
+        $avatars = $this->getDoctrine()
+            ->getRepository(User::class)
+            ->findBy(['id' => $user]);
         $injustices = $this->getDoctrine()
             ->getRepository(Injustice::class)
             ->findBy(['author' => $user]);
@@ -51,6 +55,7 @@ class ProfileController extends AbstractController
             'controller_name' => 'ProfileController',
             'profileForm' => $profileForm->createView(),
             'injustices' => $injustices,
+            'avatars' => $avatars
         ]);
     }
 }
