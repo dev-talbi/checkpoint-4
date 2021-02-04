@@ -8,18 +8,24 @@ use App\Entity\Injustice;
 use App\Form\InjusticeType;
 use App\Repository\PostLikeRepository;
 use App\Repository\InjusticeRepository;
-use Doctrine\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
 
 /**
  * @Route("/injustice")
  */
 class InjusticeController extends AbstractController
 {
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
     /**
      * @Route("/", name="injustice_index", methods={"GET"})
      */
@@ -75,7 +81,7 @@ class InjusticeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('injustice_index');
+            return $this->redirectToRoute('home');
         }
 
         return $this->render('injustice/edit.html.twig', [
@@ -85,6 +91,7 @@ class InjusticeController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_USER")
      * @Route("/{id}", name="injustice_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Injustice $injustice): Response
@@ -95,7 +102,7 @@ class InjusticeController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('injustice_index');
+        return $this->redirectToRoute('home');
     }
 
     /**

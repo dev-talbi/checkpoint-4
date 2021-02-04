@@ -14,11 +14,8 @@
             <h4>Categories</h4>
             {{ form_row(form.categories) }}
             <button type="submit" class=" btn btn-primary w-100">Filtrer</button>
-
             {{ form_end(form) }}
-
         </div>
-
         <div class="col-md-9">
             {% for injustice in injustices %}
             <a class="link-injustice" href="{{ path('injustice_show', {id: injustice.id}) }}">
@@ -28,7 +25,6 @@
                         {% for i in range(0, injustice.theme|length -1) %}
                         {{ injustice.theme[i].icon|raw }}
                         {% endfor %}
-
                     </div>
                     <div class="card-body">
                         <h5>{{injustice.title}}</h3>
@@ -50,10 +46,7 @@
         {% endfor %}
     </div>
 </div>
-
-
 {% endblock %}
-
 {% block javascripts %}
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>

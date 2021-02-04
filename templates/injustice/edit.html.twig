@@ -3,11 +3,8 @@
 {% block title %}Edit Injustice{% endblock %}
 
 {% block body %}
-    <h1>Edit Injustice</h1>
+<h1>Edit Injustice</h1>
 
-    {{ include('injustice/_form.html.twig', {'button_label': 'Update'}) }}
+{{ include('injustice/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('injustice_index') }}">back to list</a>
-
-    {{ include('injustice/_delete_form.html.twig') }}
 {% endblock %}
