@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ProfileController!{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Mes injustices</h2>
+            <a href="{{ path('injustice_new') }}" class="btn btn-primary">Ajouter</a>
+            {% for injustice in injustices %}
+            <a class="link-injustice" href="{{ path('injustice_show', {id: injustice.id}) }}">
+                <div class="card card-home">
+                    <div class="card-header">
+                        {% for i in range(0, injustice.theme|length -1) %}
+                        {{ injustice.theme[i].icon|raw }}
+                        {% endfor %}
+                    </div>
+                    <div class="card-body">
+                        <h3> {{injustice.title}}</h3>
+                    </div>
+                    <div class="card-footer">
+                        <div class="container-edit">
+                            <a href="{{ path('injustice_edit', {'id': injustice.id}) }}" type="button"
+                                class="btn btn-warning"><i class="fas fa-edit"></i>
+                            </a>
+                            {{ include('injustice/_delete_form.html.twig') }}
+                        </div>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        <div class="col-md-6">
+            <div class="card-profil">
+                <h2>Informations Personnelles</h2>
+                {{ form_start(profileForm) }}
+                <button class="btn btn-primary">Envoyer</button>
+                {{ form_end(profileForm) }}
+
+
+            </div>
+        </div>
+    </div>
+    {% for injustice in injustices %}
+
+
+    {% endfor %}
+
+    {% endblock %}

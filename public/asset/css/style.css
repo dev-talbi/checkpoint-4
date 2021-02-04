@@ -31,3 +31,12 @@
 .hide{
     display: none;
 }
+
+.btn-danger{
+    margin-left:10px ;
+}
+
+.container-edit{
+    display:flex;
+    justify-content: center;
+}
