@@ -45,7 +45,9 @@ class InjusticeType extends AbstractType
 
             ), [
                 'attr' => ['class' => 'hider'],
-            ]);
+            ])
+            ->add('picture')
+            ->add('theme');
         var_dump($user->getPseudo());
     }
 

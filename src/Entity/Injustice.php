@@ -51,11 +51,22 @@ class Injustice
      */
     private $author;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $picture;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Theme::class, inversedBy="injustices")
+     */
+    private $theme;
+
     public function __construct()
     {
         $this->likes = new ArrayCollection();
         $this->pictures = new ArrayCollection();
         $this->date = new \DateTime('now');
+        $this->theme = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -186,5 +197,42 @@ class Injustice
         return $this->date;
         return $this->DateTime;
         return $this->likes;
+        return $this->theme;
+    }
+
+    public function getPicture(): ?string
+    {
+        return $this->picture;
+    }
+
+    public function setPicture(?string $picture): self
+    {
+        $this->picture = $picture;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Theme[]
+     */
+    public function getTheme(): Collection
+    {
+        return $this->theme;
+    }
+
+    public function addTheme(Theme $theme): self
+    {
+        if (!$this->theme->contains($theme)) {
+            $this->theme[] = $theme;
+        }
+
+        return $this;
+    }
+
+    public function removeTheme(Theme $theme): self
+    {
+        $this->theme->removeElement($theme);
+
+        return $this;
     }
 }
