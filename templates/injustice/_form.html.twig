@@ -1,21 +1,39 @@
-{{ form_start(form) }}
-<div class="form-group">
-    <label for="exampleInputEmail1">Titre</label>
-    {{ form_widget(form.title) }}
-</div>
+<div class="container ">
+    {{ form_start(form) }}
+    <div class="form-group">
+        <label for="exampleInputEmail1">Titre*</label>
+        {{ form_widget(form.title) }}
+    </div>
 
-<div class="form-group">
-    <label for="exampleInputEmail1">Description</label>
-    {{ form_widget(form.description) }}
-</div>
 
-<div class="form-group hide">
-    {{ form_widget(form.date) }}
-</div>
+    <div class="form-group">
+        <label for="exampleInputEmail1">Image/Vidéo</label>
+        {{ form_widget(form.picture) }}
+    </div>
 
-<div class="form-group hide">
-    <label for="exampleInputEmail1">Auteur</label>
-    {{ form_widget(form.author,{ 'select': app.user.id }) }}
+    <div class="form-group">
+        <label for="exampleInputEmail1">Theme</label>
+        {{ form_widget(form.theme,{ 'label': 'Submit me' }) }}
+    </div>
+
+    <div class="form-group hide">
+        {{ form_widget(form.date) }}
+    </div>
+
+    <div class="form-group hide">
+        <label for="exampleInputEmail1">Auteur</label>
+        {{ form_widget(form.author,{ 'select': app.user.id },) }}
+    </div>
+
+    <div class="form-group">
+        <label for="exampleInputEmail1">Description*</label>
+        {{ form_widget(form.description, {'attr': {'rows': '10', 'cols':'80'}}) }}
+    </div>
+    <div class="col text-center">
+        <button class="btn btn-primary mt-5 ">{{ button_label|default('Envoyer') }}</button>
+        {{ form_end(form) }}
+    </div>
+
+
+
 </div>
-<button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
