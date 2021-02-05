@@ -2,9 +2,12 @@
 
 namespace App\Controller;
 
+use DateTime;
 use App\Entity\User;
+use App\Entity\Comments;
 use App\Entity\PostLike;
 use App\Entity\Injustice;
+use App\Form\CommentsType;
 use App\Form\InjusticeType;
 use App\Repository\PostLikeRepository;
 use App\Repository\InjusticeRepository;
@@ -13,8 +16,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
 /**
@@ -61,12 +64,32 @@ class InjusticeController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="injustice_show", methods={"GET"})
+     * @Route("/{id}", name="injustice_show", methods={"GET","POST"})
      */
-    public function show(Injustice $injustice): Response
+    public function show(Request $request, Injustice $injustice): Response
     {
+        $user = $this->security->getUser();
+        $comment = new Comments;
+        $commentForm = $this->createForm(CommentsType::class, $comment);
+        $commentForm->handleRequest($request);
+
+        if ($commentForm->isSubmitted() && $commentForm->isValid()) {
+            $comment->setCreatedAt(new DateTime());
+            $comment->setInjustice($injustice);
+            $comment->setUser($user);
+            $parentid = $commentForm->get("parentid")->getData();
+            $em = $this->getDoctrine()->getManager();
+            if ($parentid != null) {
+                $parent = $em->getRepository(Comments::class)->find($parentid);
+            }
+            $comment->setParent($parent ?? null);
+            $em->persist($comment);
+            $em->flush();
+            $this->addFlash('message', 'Votre commentaire a bien été envoyé');
+        }
         return $this->render('injustice/show.html.twig', [
             'injustice' => $injustice,
+            'commentForm' => $commentForm->createView(),
         ]);
     }
 
