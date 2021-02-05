@@ -53,16 +53,10 @@ class RegistrationFormType extends AbstractType
 
             ->add('lastname', TextType::class, [
                 'label' => 'Prénom',
-                'attr' => [
-                    'placeholder' => 'Votre prénom'
-                ]
             ])
 
             ->add('pseudo', TextType::class, [
                 'label' => 'Pseudo',
-                'attr' => [
-                    'placeholder' => 'Votre pseudo'
-                ]
             ])
 
 
