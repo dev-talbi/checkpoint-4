@@ -2,6 +2,8 @@
 
 1. Clone this project
 2. Run `composer install`
+3. Set your db in .env
+4. make migration of the db
 
 ### Working
 
