@@ -61,12 +61,18 @@ class Injustice
      */
     private $theme;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="injustice")
+     */
+    private $comments;
+
     public function __construct()
     {
         $this->likes = new ArrayCollection();
         $this->pictures = new ArrayCollection();
         $this->date = new \DateTime('now');
         $this->theme = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -232,6 +238,36 @@ class Injustice
     public function removeTheme(Theme $theme): self
     {
         $this->theme->removeElement($theme);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comments[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comments $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setInjustice($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comments $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getInjustice() === $this) {
+                $comment->setInjustice(null);
+            }
+        }
 
         return $this;
     }
