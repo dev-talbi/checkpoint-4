@@ -466,6 +466,10 @@ body.menu-active div#content .menu-trigger {
   left: 294px;
 }
 
+.container-comment{
+  margin-top: 40px;
+}
+
    @media screen and (max-width: 1000px) {
 
         .navbar{
