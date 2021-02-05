@@ -23,4 +23,10 @@
     display: block;
     position: sticky;
     top: 20px;
+    margin-top: 20px;
+}
+
+.author{
+    color: #61ADE0;
+    font-weight: bold;
 }

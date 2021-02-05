@@ -21,7 +21,7 @@
             <a class="link-injustice" href="{{ path('injustice_show', {id: injustice.id}) }}">
                 <div class="card card-home">
                     <div class="card-header">
-                        Proposé par {{injustice.author}} le {{injustice.date|date('d/m/Y')}}
+                        Proposé par <span class="author">{{injustice.author}}</span> le {{injustice.date|date('d/m/Y')}}
                         {% for i in range(0, injustice.theme|length -1) %}
                         {{ injustice.theme[i].icon|raw }}
                         {% endfor %}

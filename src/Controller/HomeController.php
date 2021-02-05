@@ -4,16 +4,19 @@ namespace App\Controller;
 
 use App\Data\SearchData;
 use App\Form\SearchForm;
-use App\Entity\Injustice;
 use App\Repository\InjusticeRepository;
-use App\Repository\ThemeRepository;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
 {
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
     /**
      * @Route("/", name="home")
      */
