@@ -51,7 +51,7 @@ class InjusticeController extends AbstractController
             $entityManager->persist($injustice);
             $entityManager->flush();
 
-            return $this->redirectToRoute('injustice_index');
+            return $this->redirectToRoute('home');
         }
 
         return $this->render('injustice/new.html.twig', [

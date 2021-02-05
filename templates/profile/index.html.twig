@@ -35,15 +35,7 @@
         <div class="col-md-6">
             <div class="card-profil">
                 <h2>Informations Personnelles</h2>
-                {% for avatar in avatars %}
-                <div class="container-avatar">
-                    <img class="avatar" src="{{ avatar.photo }}" alt="avatar">
-                </div>
-                {% endfor %}
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Avatar</label>
-                    {{ form_widget(profileForm.photo) }}
-                </div>
+
                 {{ form_start(profileForm) }}
                 <div class="form-group">
                     <label for="exampleInputEmail1">Email</label>
@@ -59,8 +51,6 @@
                 </div>
                 <button class="btn btn-primary">Envoyer</button>
                 {{ form_end(profileForm) }}
-
-
             </div>
         </div>
     </div>
