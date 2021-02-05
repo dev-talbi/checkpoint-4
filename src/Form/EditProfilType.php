@@ -29,13 +29,6 @@ class EditProfileType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Votre prenom'
                 ]
-            ])
-
-            ->add('photo', TextType::class, [
-                'label' => 'Avatar',
-                'attr' => [
-                    'placeholder' => 'Votre prenom'
-                ]
             ]);
     }
 
