@@ -15,14 +15,14 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light ">
         <a class="navbar-brand" href="#">Injustice</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('home') }}">Home <span class="sr-only">(current)</span></a>
                 </li>
@@ -37,6 +37,17 @@
                             class="sr-only">(current)</span></a>
                 </li>
                 {% endif %}
+                {% if app.user %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('profile', { 'id': app.user.id }) }}">Mon compte<span
+                            class="sr-only">(current)</span></a>
+                </li>
+                {% endif %}
+                {% if is_granted("ROLE_ADMIN") %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('admin')}}">Admin</a>
+                </li>
+                {% endif %}
             </ul>
             {% if app.user %}
             <ul class="nav navbar-nav navbar-right">
@@ -48,8 +59,52 @@
             </ul>
         </div>
     </nav>
+
+    <div class="menu">
+        <nav class="menu__nav">
+            <ul class="menu__list r-list">
+                <li class="menu__group">
+                    <a class="menu__link r-link " href="{{ path('home')}}">Accueil
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                {% if app.user %}
+                {% else %}
+                <li class="menu__group">
+                    <a class="menu__link r-link" href="{{ path('app_login') }}">Connecion</a>
+                </li>
+                <li class="menu__group">
+                    <a class="menu__link r-link" href="{{ path('app_register') }}">Inscription</a>
+                </li>
+                {% endif %}
+                {% if app.user %}
+                <li class="menu__group">
+                    <a class="menu__link r-link" href="{{ path('profile', { 'id': app.user.id }) }}">Mon compte</a>
+                </li>
+                {% endif %}
+                {% if is_granted("ROLE_ADMIN") %}
+                <li class="menu__group">
+                    <a class="menu__link r-link" href="{{ path('admin')}}">Admin</a>
+                </li>
+                {% endif %}
+                {% if app.user %}
+                <li class="menu__group">
+                    <a class="menu__link r-link" href="{{ path('app_logout')}}"><i class="fas fa-sign-out-alt"></i></a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        <button class="menu__toggle r-button" type="button">
+            <span class="menu__hamburger m-hamburger">
+                <span class="m-hamburger__label">
+                    <span class="menu__screen-reader screen-reader">Open menu</span>
+                </span>
+            </span>
+        </button>
+    </div>
     {% block body %}{% endblock %}
 
+    <script src="{{asset('asset/js/script.js')}}"></script>
     <!-- FONTAWESOME -->
     <script src="https://kit.fontawesome.com/eacfbebdea.js" crossorigin="anonymous"></script>
     <!-- BOOTSTRAP JavaScript Bundle with Popper -->

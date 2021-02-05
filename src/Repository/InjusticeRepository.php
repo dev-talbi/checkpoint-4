@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Data\SearchData;
 use App\Entity\Injustice;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -17,6 +18,33 @@ class InjusticeRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Injustice::class);
+    }
+
+    public function findSearch(SearchData $searchData): array
+    {
+        $query = $this->createQueryBuilder('p')
+            ->select('c', 'p')
+            ->join('p.theme', 'c');
+
+        if (!empty($searchData->q)) {
+            $query = $query
+                ->andWhere('p.title LIKE :q')
+                ->setParameter('q', "%{$searchData->q}%");
+        }
+
+        if (!empty($searchData->q)) {
+            $query = $query
+                ->andWhere('p.description LIKE :q')
+                ->setParameter('q', "%{$searchData->q}%");
+        }
+
+        if (!empty($searchData->categories)) {
+            $query = $query
+                ->andWhere('c.id IN (:category)')
+                ->setParameter('category', $searchData->categories);
+        }
+
+        return $query->getQuery()->getResult();
     }
 
     // /**

@@ -1,0 +1,32 @@
+.fas{
+    float: right;
+    color: #61ADE0;
+
+}
+
+.fa-thumbs-up{
+    float: left;
+}
+
+.show-one-picture{
+    width: 300px;
+    text-align: center;
+}
+
+.picture-container{
+    display: flex;
+    justify-content: center;
+    margin-bottom:20px ;
+}
+
+.filter{
+    display: block;
+    position: sticky;
+    top: 20px;
+    margin-top: 20px;
+}
+
+.author{
+    color: #61ADE0;
+    font-weight: bold;
+}

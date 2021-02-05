@@ -58,15 +58,16 @@ class User implements UserInterface
      */
     private $pseudo;
 
-    /**
-     * @ORM\OneToOne(targetEntity=Picture::class, mappedBy="avatar", cascade={"persist", "remove"})
-     */
-    private $avatar;
 
     /**
      * @ORM\OneToMany(targetEntity=Injustice::class, mappedBy="author")
      */
     private $injustices;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $photo;
 
     public function __construct()
     {
@@ -218,27 +219,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getAvatar(): ?Picture
-    {
-        return $this->avatar;
-    }
 
-    public function setAvatar(?Picture $avatar): self
-    {
-        // unset the owning side of the relation if necessary
-        if ($avatar === null && $this->avatar !== null) {
-            $this->avatar->setAvatar(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($avatar !== null && $avatar->getAvatar() !== $this) {
-            $avatar->setAvatar($this);
-        }
-
-        $this->avatar = $avatar;
-
-        return $this;
-    }
 
     /**
      * @return Collection|Injustice[]
@@ -273,5 +254,17 @@ class User implements UserInterface
     public function __toString()
     {
         return $this->pseudo;
+    }
+
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+
+    public function setPhoto(?string $photo): self
+    {
+        $this->photo = $photo;
+
+        return $this;
     }
 }
